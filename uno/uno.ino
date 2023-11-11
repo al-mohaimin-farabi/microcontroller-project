@@ -17,6 +17,7 @@ int sprayPosition;
 int sprayState;
 
 void setup() {
+  Serial.begin(9600);
   setDefult();
   spray_Angle.attach(10);
   spray_Angle.write(90);
@@ -36,6 +37,7 @@ void receiveData() {
     boat_Joystick_y = Wire.read() * 4;
     sprayPosition = Wire.read();
     sprayState = Wire.read();
+    Serial.println(sprayPosition);
   } else {
     setDefult();
   }

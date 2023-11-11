@@ -12,6 +12,7 @@ int sprayPosition = 89;
 int sprayState = 1;
 
 void setup() {
+  Serial.begin(9600);
   Wire.begin();
   pinMode(SPRAY_SWITCH_PIN, INPUT_PULLUP);
 }
@@ -30,5 +31,6 @@ void loop() {
   Wire.write(boat_Joystick_y / 4);
   Wire.write(sprayPosition);
   Wire.write(sprayState);
+  // Serial.println(boat_Joystick_y);
   Wire.endTransmission();
 }
