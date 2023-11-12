@@ -1,9 +1,12 @@
-#include <Wire.h>
+#include <RH_ASK.h>
+#include <SPI.h>
 
 #define S_VRX_PIN A0
 #define B_VRX_PIN A1
 #define B_VRY_PIN A2
 #define SPRAY_SWITCH_PIN 2
+
+RH_ASK rf_driver;
 
 int boat_Joystick_x = 511;
 int boat_Joystick_y = 511;
@@ -13,7 +16,7 @@ int sprayState = 1;
 
 void setup() {
   Serial.begin(9600);
-  Wire.begin();
+  rf_driver.init();
   pinMode(SPRAY_SWITCH_PIN, INPUT_PULLUP);
 }
 
@@ -26,11 +29,13 @@ void loop() {
 
   sprayPosition = map(spray_Joystick_x, 0, 1023, 0, 180);
 
-  Wire.beginTransmission(8);
-  Wire.write(boat_Joystick_x / 4);
-  Wire.write(boat_Joystick_y / 4);
-  Wire.write(sprayPosition);
-  Wire.write(sprayState);
-  // Serial.println(boat_Joystick_y);
-  Wire.endTransmission();
+  uint8_t buf[4];
+
+  buf[0] = boat_Joystick_x / 4;
+  buf[1] = boat_Joystick_y / 4;
+  buf[2] = sprayPosition;
+  buf[3] = sprayState;
+
+  rf_driver.send(buf, sizeof(buf));
+  rf_driver.waitPacketSent();
 }

@@ -1,18 +1,22 @@
-#include <Wire.h>
-#include <Servo.h>
+#include <RH_ASK.h>
+#include <SPI.h>
+// #include <Servo.h>
+#include "ServoTimer2.h"
 #include <AFMotor.h>
 
 #define MAX_SPEED 200
 #define MAX_SPEED_OFFSET 20
 
-Servo spray_Angle;
+ServoTimer2 spray_Angle;
+
 AF_DCMotor sprayMotor(1);
 AF_DCMotor motorLeft(3);
 AF_DCMotor motorRight(4);
-
+RH_ASK rf_driver;
 
 int boat_Joystick_x;
 int boat_Joystick_y;
+int spray_Joystick_x;
 int sprayPosition;
 int sprayState;
 
@@ -20,27 +24,26 @@ void setup() {
   Serial.begin(9600);
   setDefult();
   spray_Angle.attach(10);
-  spray_Angle.write(90);
-  Wire.begin(8);
-  Wire.onReceive(receiveData);
+  spray_Angle.write(sprayPosition);
+  if (!rf_driver.init()) {
+    Serial.println("RF driver initialization failed");
+  }
 }
 
 void loop() {
-  spray_Angle.write(sprayPosition);
-  controlMotors();
-  doSpray();
-}
+  uint8_t buf[4];
+  uint8_t buflen = sizeof(buf);
 
-void receiveData() {
-  if (Wire.available() >= 3) {
-    boat_Joystick_x = Wire.read() * 4;
-    boat_Joystick_y = Wire.read() * 4;
-    sprayPosition = Wire.read();
-    sprayState = Wire.read();
-    Serial.println(sprayPosition);
+  if (rf_driver.recv(buf, &buflen)) {
+    boat_Joystick_x = buf[0] * 4;
+    boat_Joystick_y = buf[1] * 4;
+    sprayPosition = buf[2];
+    sprayState = buf[3];
   } else {
     setDefult();
   }
+  controlMotors();
+  doSpray();
 }
 
 void setDefult() {
@@ -49,7 +52,6 @@ void setDefult() {
   sprayPosition = 90;
   sprayState = 1;
 }
-
 
 void controlMotors() {
   if (boat_Joystick_x >= 800) {
@@ -105,7 +107,7 @@ void stopMotors() {
 void doSpray() {
   if (sprayState == 0) {
     sprayMotor.run(FORWARD);
-    sprayMotor.setSpeed(250);
+    sprayMotor.setSpeed(255);
   } else {
     sprayMotor.run(RELEASE);
   }
