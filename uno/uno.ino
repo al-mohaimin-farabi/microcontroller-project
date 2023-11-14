@@ -1,5 +1,5 @@
-// #include <RH_ASK.h>
-// #include <SPI.h>
+#include <RH_ASK.h>
+#include <SPI.h>
 // #include <Servo.h>
 #include "ServoTimer2.h"
 #include <AFMotor.h>
@@ -12,7 +12,7 @@ ServoTimer2 spray_Angle;
 AF_DCMotor sprayMotor(1);
 AF_DCMotor motorLeft(3);
 AF_DCMotor motorRight(4);
-// RH_ASK rf_driver;
+RH_ASK rf_driver;
 
 int boat_Joystick_x;
 int boat_Joystick_y;
@@ -25,42 +25,43 @@ void setup() {
   setDefult();
   spray_Angle.attach(10);
   spray_Angle.write(sprayPosition);
-  // if (!rf_driver.init()) {
-  //   Serial.println("RF driver initialization failed");
-  // }
+  if (!rf_driver.init()) {
+    Serial.println("RF driver initialization failed");
+  }
 }
 
 void loop() {
-  // uint8_t buf[4];
-  // uint8_t buflen = sizeof(buf);
-  moveForward();
-  delay(12000);
-  spray_Angle.write(750);
-  delay(500);
-  spray_Angle.write(1550);
-  delay(500);
-  spray_Angle.write(2250);
-  // if (rf_driver.recv(buf, &buflen)) {
-  // sprayPosition = buf[0];
-  // sprayState = buf[1];
-  // boat_Joystick_x = buf[2];
-  // boat_Joystick_y = buf[3];
+  uint8_t buf[4];
+  uint8_t buflen = sizeof(buf);
 
-  // spray_Angle.write(map(sprayPosition, 0, 180, 750, 2250));
-
-  // Serial.print("sprayPosition ");
-  // Serial.print(map(sprayPosition, 0, 180, 750, 2250));
-  // Serial.print(" | sprayState ");
-  // Serial.print(sprayState);
-  // Serial.print("| boat_Joystick_x ");
-  // Serial.print(boat_Joystick_x * 4);
-  // Serial.print("| boat_Joystick_y ");
-  // Serial.println(boat_Joystick_y * 4);
+  // moveForward();
+  // delay(12000);
+  // spray_Angle.write(750);
   // delay(500);
-  // controlMotors();
-  // doSpray();
-  // blink();
-  // }
+  // spray_Angle.write(1550);
+  // delay(500);
+  // spray_Angle.write(2250);
+  if (rf_driver.recv(buf, &buflen)) {
+    sprayPosition = buf[0];
+    sprayState = buf[1];
+    boat_Joystick_x = buf[2];
+    boat_Joystick_y = buf[3];
+
+    // spray_Angle.write(map(sprayPosition, 0, 180, 750, 2250));
+
+    Serial.print("sprayPosition ");
+    Serial.print(map(sprayPosition, 0, 180, 750, 2250));
+    Serial.print(" | sprayState ");
+    Serial.print(sprayState);
+    Serial.print("| boat_Joystick_x ");
+    Serial.print(boat_Joystick_x * 4);
+    Serial.print(" | boat_Joystick_y ");
+    Serial.println(boat_Joystick_y * 4);
+    delay(500);
+    // controlMotors();
+    // doSpray();
+    // blink();
+  }
   // else {
   //   setDefult();
   // }
@@ -75,8 +76,14 @@ void setDefult() {
   pinMode(6, OUTPUT);
 }
 
-void blink(){
+void blink() {
+  digitalWrite(6, HIGH);
+  delay(50);
+  digitalWrite(6, LOW);
 
+  digitalWrite(5, HIGH);
+  delay(50);
+  digitalWrite(5, LOW);
 }
 
 void controlMotors() {
