@@ -31,10 +31,20 @@ void loop() {
 
   uint8_t buf[4];
 
-  buf[0] = boat_Joystick_x / 4;
-  buf[1] = boat_Joystick_y / 4;
-  buf[2] = sprayPosition;
-  buf[3] = sprayState;
+  buf[0] = sprayPosition;
+  buf[1] = sprayState;
+  buf[2] = boat_Joystick_x / 4;
+  buf[3] = boat_Joystick_y / 4;
+
+  // Serial.print("sprayPosition ");
+  // Serial.print(sprayPosition);
+  // Serial.print(" | sprayState ");
+  // Serial.print(sprayState);
+  // Serial.print("| boat_Joystick_x ");
+  // Serial.print(boat_Joystick_x);
+  // Serial.print("| boat_Joystick_y ");
+  // Serial.println(boat_Joystick_y);
+  // delay(500);
 
   rf_driver.send(buf, sizeof(buf));
   rf_driver.waitPacketSent();
