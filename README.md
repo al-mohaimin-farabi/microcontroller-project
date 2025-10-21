@@ -76,10 +76,3 @@ Below are the main diagrams for this project. These illustrate the receiver wiri
 ## License & Attribution
 
 This README was generated/updated locally using the files present in this workspace and the GitHub repository link provided by the user. Please check the upstream repository for original licensing information.
-
-## Notes / Next steps
-
-- I couldn't open `Arduino_Project.pdf` programmatically from this environment; if you want a README section based on the PDF's text, please either upload the PDF into the workspace root with the exact filename `Arduino_Project.pdf` or paste the PDF text here and I will incorporate its content into the README.
-- If you'd like more detailed diagrams, I can extract pinouts and create a simple schematic image or add a table of signals.
-
- 
