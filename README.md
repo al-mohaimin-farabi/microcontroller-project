@@ -2,11 +2,7 @@
 
 This repository contains an Arduino-based remote-controlled boat project with a spray mechanism. The project appears to be a small-scale prototype similar to an autonomous/wireless cleaning boat (like a "waste-shark" in miniature) that is controlled by an RF remote and uses DC motors for propulsion and a servo for the spray mechanism.
 
-![Receiver Diagram](./reciver_Diagram.png)
-
 ![Transmitter Photo](./TransMeter.png)
-
-![Transmitter Diagram](./Transmeter_Diagram.png)
 
 Repository link: https://github.com/al-mohaimin-farabi/microcontroller-project
 
@@ -63,15 +59,17 @@ Contents in this workspace:
 2. Upload `recevier/receiver.ino` to the boat Arduino. Connect motor shield, motors, servo, and spray actuator.
 3. Power both sides appropriately and operate the transmitter. The code sends a 4-byte packet each loop; the receiver applies motor and spray commands when packets are received.
 
-## Screenshots
+## Diagrams
 
-Below are the diagrams/images included in the workspace. They are referenced with relative paths so they will render on GitHub when the files are present in the repo.
+Below are the main diagrams for this project. These illustrate the receiver wiring and the transmitter layout.
 
-![Receiver Diagram](./reciver_Diagram.png)
+- **Receiver diagram**
 
-![Transmitter Photo](./TransMeter.png)
+  ![Receiver Diagram](./reciver_Diagram.png)
 
-![Transmitter Diagram](./Transmeter_Diagram.png)
+- **Transmitter diagram**
+
+  ![Transmitter Diagram](./Transmeter_Diagram.png)
 
 ## License & Attribution
 
