@@ -6,6 +6,8 @@ This repository contains an Arduino-based remote-controlled boat project with a 
 
 Repository link: https://github.com/al-mohaimin-farabi/microcontroller-project
 
+Documentation: https://docs.google.com/document/d/1et-pY81oIMAOb39NNZ7sHbCaDjX9CXgyzsgHG9zoDsQ/edit?tab=t.0
+
 Contents in this workspace:
 
 - `transmeter/` — transmitter code for the RF remote controller (`transmeter.ino`).
@@ -80,8 +82,4 @@ This README was generated/updated locally using the files present in this worksp
 - I couldn't open `Arduino_Project.pdf` programmatically from this environment; if you want a README section based on the PDF's text, please either upload the PDF into the workspace root with the exact filename `Arduino_Project.pdf` or paste the PDF text here and I will incorporate its content into the README.
 - If you'd like more detailed diagrams, I can extract pinouts and create a simple schematic image or add a table of signals.
 
-## Documentation
-
-Additional project documentation is available here:
-
-https://docs.google.com/document/d/1et-pY81oIMAOb39NNZ7sHbCaDjX9CXgyzsgHG9zoDsQ/edit?tab=t.0
+ 
